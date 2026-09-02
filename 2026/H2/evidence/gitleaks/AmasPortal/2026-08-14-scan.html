@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>AmasPortal Gitleaks 機密掃描報告</title>
+<style>
+  /* ── 螢幕樣式 ───────────────────────────────────────────────── */
+  html { background: #f1f5f9; }
+  body { font-family: "Noto Sans TC", "Noto Sans CJK TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", sans-serif;
+         margin: 0 auto; max-width: 1280px; background: #fff; color: #1e293b; }
+  .report-header { color: #0f172a; padding: 32px 40px 20px; border-bottom: 2px solid #cbd5e1; }
+  .report-header h1 { margin: 0 0 6px; font-size: 24px; color: #0f172a; }
+  .report-header .subtitle { color: #334155; margin: 0 0 16px; font-size: 14px; }
+  .meta-bar { display: flex; gap: 24px; flex-wrap: wrap; font-size: 13px; color: #334155; }
+  .stats { display: flex; gap: 16px; padding: 24px 40px 0; flex-wrap: wrap; }
+  .stat-tile { flex: 1; min-width: 140px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; text-align: center; }
+  .stat-tile .num { font-size: 28px; font-weight: 700; }
+  .stat-tile .label { font-size: 12px; color: #64748b; margin-top: 4px; }
+  section { padding: 24px 40px; }
+  h2 { font-size: 18px; border-left: 4px solid #2563eb; padding-left: 10px; }
+  .callout { background: #fffbeb; border-left: 4px solid #d97706; padding: 14px 18px; font-size: 14px; line-height: 1.7; }
+  .finding { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+  .finding h3 { margin-top: 0; font-size: 16px; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; background: #64748b; color: #fff; font-size: 12px; font-weight: 600; }
+  table { width: 100%; table-layout: fixed; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th, td { border: 1px solid #e2e8f0; padding: 8px 10px; text-align: left; vertical-align: top;
+           overflow-wrap: anywhere; word-break: normal; }
+  th { background: #f1f5f9; }
+  code { background: #f1f5f9; padding: 1px 4px; border-radius: 4px; font-size: 12px; overflow-wrap: anywhere; }
+
+  /* ── 列印／輸出 PDF 樣式 ─────────────────────────────────────── */
+  @page { size: A4; margin: 12mm 11mm; }
+
+  @media print {
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    html, body { background: #fff; font-size: 12px; }
+    body { max-width: none; }
+    .no-print { display: none !important; }
+
+    .report-header { padding: 0 14px 10px; }
+    .report-header h1 { font-size: 19px; }
+    .report-header .subtitle { margin-bottom: 10px; font-size: 12px; }
+    .meta-bar { gap: 16px; font-size: 11px; }
+    .stats { padding: 12px 14px 0; gap: 10px; flex-wrap: nowrap; }
+    section { padding: 12px 14px 0; }
+
+    .stat-tile { min-width: 0; padding: 10px 6px; border-radius: 6px; }
+    .stat-tile .num { font-size: 18px; }
+    .stat-tile .label { font-size: 10px; }
+
+    h2 { font-size: 15px; margin: 14px 0 8px; break-after: avoid; page-break-after: avoid; }
+    .callout { font-size: 12px; padding: 10px 14px; }
+
+    .finding { break-inside: auto; margin-bottom: 12px; padding: 12px 14px; border-radius: 6px; }
+    .finding h3 { font-size: 14px; break-after: avoid; page-break-after: avoid; }
+
+    table { font-size: 10.5px; margin: 8px 0; break-inside: auto; }
+    th, td { padding: 5px 7px; }
+    tr, th, td { break-inside: avoid; page-break-inside: avoid; }
+    thead { display: table-header-group; }
+
+    p { orphans: 3; widows: 3; }
+    code { background: #f1f5f9; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="report-header">
+  <h1>AmasPortal Gitleaks 機密掃描報告</h1>
+  <p class="subtitle">全專案 Git 歷史機密掃描</p>
+  <div class="meta-bar">
+    <span>掃描日期：2026-08-14</span>
+    <span>掃描工具：Gitleaks</span>
+    <span>掃描範圍：15 個分支 / 187 個 commit</span>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="stat-tile"><div class="num">15</div><div class="label">掃描分支數</div></div>
+  <div class="stat-tile"><div class="num">187</div><div class="label">檢查 commit 數</div></div>
+  <div class="stat-tile"><div class="num">0</div><div class="label">潛在洩漏風險（finding）</div></div>
+  <div class="stat-tile"><div class="num" style="color:#64748b">無</div><div class="label">整體風險等級</div></div>
+</section>
+
+<section>
+  <h2>一、執行摘要</h2>
+  <div class="callout">本次針對本機可見全部分支歷史進行機密掃描，未發現機密外洩。掃描設定沿用 <code>.gitleaks.toml</code>（gitleaks 內建規則庫 + 專案 allowlist，allowlist 僅排除 <code>config/credentials/*.yml.enc</code> 這類需搭配未進版控的 <code>.key</code> 才能解密的 Rails 加密密文）。</div>
+</section>
+
+<section>
+  <h2>二、風險明細與資安分析</h2>
+  <p>未發現機密外洩，略過明細。</p>
+</section>
+
+</body>
+</html>

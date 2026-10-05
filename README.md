@@ -22,14 +22,14 @@
 - [ ] 導入「可控性」AI 知識庫，整合多 VM 規範為單一 git 化 repo，產出 1 份「基於 Skill 與 Git 化管理的 AI 知識庫開發實務」 — [佐證](2026/H2/evidence/skills/)
 
 ### CI/CD 擴展與落地
-- 空專案、AmasPortal、AmasCar 導入 gitLeaks，於 Husky (pre-commit) 及 CI 階段部署自動化機敏資料攔截 (2/3) — [佐證](2026/H2/evidence/gitleaks/)
-  - [ ] 空專案
+- 空專案、AmasPortal、AmasCar 導入 gitLeaks，於 Husky (pre-commit) 及 CI 階段部署自動化機敏資料攔截 (3/3) — [佐證](2026/H2/evidence/gitleaks/)
+  - [x] 空專案 — [CI 攔截驗證 PR #35](https://github.com/amassp/empty_project/pull/35)
   - [x] AmasPortal
-  - [x] AmasCar
-- 針對負責之專案進行 gitLeaks history 檢查，盤點過往 commit 是否有敏感資訊殘留 (0/3) — [佐證](2026/H2/evidence/gitleaks/)
-  - [ ] 空專案
-  - [ ] AmasPortal
-  - [ ] AmasCar
+  - [x] AmasCar — [CI 攔截驗證 PR #14](https://github.com/amassp/AmasCar/pull/14)
+- 針對負責之專案進行 gitLeaks history 檢查，盤點過往 commit 是否有敏感資訊殘留 (3/3) — [佐證](2026/H2/evidence/gitleaks/)
+  - [x] 空專案（2026/10/05，0 finding）
+  - [x] AmasPortal（2026/10/02，0 finding）
+  - [x] AmasCar（2026/10/02，1 finding，待確認金鑰是否已撤銷）
 
 ### 開發流程優化
 - [ ] 環境建置／開發問題排除後回饋於知識庫

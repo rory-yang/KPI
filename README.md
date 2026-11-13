@@ -42,7 +42,7 @@
 - [ ] 定期檢視專案資安設定與開發流程
 
 ### 完善開發標準化流程
-- 空專案、AmasPortal、AmasCar 導入 yarn audit，每季執行並以 skill 解析報告，作為版本升級與風險修正決策依據 (0/3) — [佐證](2026/H2/evidence/yarn-audit/)
+- 空專案、AmasPortal、AmasCar 導入 yarn audit，並以 skill 解析報告，作為版本升級與風險修正決策依據 (0/3) — [佐證](2026/H2/evidence/yarn-audit/)
   - [ ] 空專案
   - [ ] AmasPortal
   - [ ] AmasCar
